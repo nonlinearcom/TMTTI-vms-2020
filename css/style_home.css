@@ -1,0 +1,48 @@
+main {
+	display: flex;
+	overflow-y: hidden;
+	height: 100vh;
+}
+
+main > * {
+	flex: 1;
+	overflow-y: scroll;
+	padding: 16px;
+}
+
+#channel-images figure {
+	width: 100%;
+	transform: none;
+}
+
+
+.article-card {
+	min-height: 300px;
+	/* background-color: #eee; */
+	padding: 16px;
+	border: 1px solid black;
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+}
+
+#channel-contents > * + * {
+margin-top: 32px;
+}
+
+#channel-contents:last-child {
+	margin-bottom: 32px;
+}
+
+.card--title{
+	margin: 8px 0;
+}
+
+.card--description{
+	margin: 0;
+	font-size: 16px;
+}
+
+.card--author{
+	margin-top: auto;
+}

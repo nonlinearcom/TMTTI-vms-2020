@@ -1,0 +1,209 @@
+/*-------------------
+/  Covers color
+/-------------------*/
+
+.bgcolor__violence {
+    background-color: #EF233C;
+  }
+  
+  .bgcolor__privacy {
+    background-color: #000004;
+  }
+  
+  .bgcolor__automation {
+    background-color: #1E90FF;
+  }
+  
+  .bgcolor__ml {
+    background-color: #9cafb7;
+  }
+  
+  .bgcolor__politics {
+    background-color: #E6C229;
+  }
+  
+  .bgcolor__cv {
+    background-color: #16DB93;
+  }
+  
+  .bgcolor__platforms {
+    background-color: #37393e;
+  }
+  
+  .bgcolor__labor {
+    background-color: #FF6C47;
+  }
+  
+  .bgcolor__surveillance {
+    background-color: #E3C08C;
+  }
+  
+  .bgcolor__wearables {
+    background-color: #2eb8b3;
+  }
+  
+  .bgcolor__ic {
+    background-color: #c15398;
+  }
+
+  /*-------------------
+/  Covers color
+/-------------------*/
+
+.color__violence {
+  color: #EF233C;
+}
+
+.color__privacy {
+  color: #000004;
+}
+
+.color__automation {
+  color: #1E90FF;
+}
+
+.color__ml {
+  color: #9cafb7;
+}
+
+.color__politics {
+  color: #E6C229;
+}
+
+.color__cv {
+  color: #16DB93;
+}
+
+.color__platforms {
+  color: #37393e;
+}
+
+.color__labor {
+  color: #FF6C47;
+}
+
+.color__surveillance {
+  color: #E3C08C;
+}
+
+.color__wearables {
+  color: #2eb8b3;
+}
+
+.color__ic {
+  color: #c15398;
+}
+
+  /*-------------------
+/  Note color
+/-------------------*/
+
+.note__violence {
+  color: #EF233C;
+  border: 1px solid #EF233C; 
+}
+
+.note__violence:hover {
+background-color: #EF233C;
+color: white; 
+}
+
+.note__privacy {
+  color: #000004;
+  border: 1px solid #000004; 
+}
+
+.note__privacy:hover {
+background-color: #000004;
+color: white; 
+}
+
+.note__automation {
+  color: #1E90FF;
+  border: 1px solid #1E90FF; 
+}
+
+.note__automation:hover {
+background-color: #1E90FF;
+color: white; 
+}
+
+.note__ml {
+  color: #9cafb7;
+  border: 1px solid #9cafb7; 
+}
+
+.note__ml:hover {
+background-color: #9cafb7;
+color: white; 
+}
+
+.note__politics {
+  color: #D5B118;
+  border: 1px solid #D5B118; 
+}
+
+.note__politics:hover {
+background-color: #E6C229;
+border: 1px solid #E6C229; 
+color: white; 
+}
+
+.note__cv {
+  color: #16DB93;
+  border: 1px solid #16DB93; 
+}
+
+.note__cv:hover {
+background-color: #16DB93;
+color: white; 
+}
+
+.note__platforms {
+  color: #37393e;
+  border: 1px solid #37393e; 
+}
+
+.note__platforms:hover {
+background-color: #37393e;
+color: white; 
+}
+
+.note__labor {
+  color: #FF6C47;
+  border: 1px solid #FF6C47; 
+}
+
+.note__labor:hover {
+background-color: #FF6C47;
+color: white; 
+}
+
+.note__surveillance {
+  color: #D2B07B;
+  border: 1px solid #D2B07B; 
+}
+
+.note__surveillance:hover {
+background-color: #D2B07B;
+color: white; 
+}
+
+.note__wearables {
+  color: #2eb8b3;
+  border: 1px solid #2eb8b3; 
+}
+
+.note__wearables:hover {
+background-color: #2eb8b3;
+color: white; 
+}
+
+.note__ic {
+  color: #c15398;
+  border: 1px solid #c15398; 
+}
+.note__ic:hover {
+background- .note__ic ;
+color: white;color: 
+}
