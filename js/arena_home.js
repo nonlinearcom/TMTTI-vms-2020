@@ -23,7 +23,7 @@ async function fetchGroup(slug) {
   return await channel.json()
 }
 
-// SECTIONS
+// BUILD SECTIONS
 
 function getChannelImages(channel) {
   const imageContainer = document.getElementById('channel-images')

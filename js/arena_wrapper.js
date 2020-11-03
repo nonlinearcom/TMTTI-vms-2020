@@ -1,41 +1,128 @@
 document.addEventListener('load', init())
 
-function init() {
+async function init() {
   const articleContainer = document.getElementById('container')
-  fetchContent(articleContainer.dataset.channel)
-}
-
-function fetchContent(slug) {
-  const xhttp = new XMLHttpRequest()
-  xhttp.onreadystatechange = function() {
-    if (this.readyState === 4 && this.status === 200) {
-      const fullChannel = JSON.parse(this.responseText)
-      // TODO: move getChannelInfo & arenaCMS in init() to reuse fetchContent function
-      getChannelInfo(fullChannel)
-      arenaCMS(fullChannel)
-      return fullChannel
-    }
-  }
-  xhttp.open(
-    'GET',
-    `https://api.are.na/v2/channels/${slug}?v=${Math.random()}`,
-    true
-  ) // random is to avoid cache and fetch new blocks
-  xhttp.send()
-}
-
-function arenaCMS(channel) {
-  const container = document.getElementById('container')
-  channel.contents.reverse().forEach((block) => {
-    if (block.class === 'Text') container.appendChild(textBlock(block))
-    if (block.image) container.appendChild(imageBlock(block))
+  await fetchChannel(articleContainer.dataset.channel).then((data) => {
+    arenaCMS(data)
   })
 }
 
+// FETCH
+
+// channel
+
+async function fetchChannel(slug) {
+  const channel = await fetch(
+    `https://api.are.na/v2/channels/${slug}?v=${Math.random()}`
+  )
+  return await channel.json()
+}
+
+// BUILD SECTIONS
+
+// contents
+
+function arenaCMS(channel) {
+  let tagList = []
+  let cover = null
+  const container = document.getElementById('container')
+  channel.contents.reverse().forEach((block) => {
+    if (block.class === 'Text') {
+      if (block.title === 'tag') {
+        tagList = block.content.trim().split(', ')
+      } else if (block.title === 'notes') {
+        noteList(block)
+      } else container.appendChild(textBlock(block))
+    }
+    if (block.class === 'Image') {
+      if (block.title === 'cover') cover = block
+      else container.appendChild(imageBlock(block))
+    }
+    if (block.class === 'Channel') {
+      container.appendChild(embedChannel(block.slug))
+    }
+  })
+  setHeader(channel, tagList, cover)
+}
+
+// embed reference
+
+function embedChannel(slug) {
+  const embed = document.createElement('iframe')
+  embed.src = `https://www.are.na/iulm-vms-2020/${slug}/embed`
+  embed.allowFullscreen = true
+  embed.width = '100%'
+  embed.height = '560'
+  return embed
+}
+
+// header
+
+function setHeader(channel, tagList, img) {
+  const tags = document.createElement('ul')
+  tags.className = 'tags'
+
+  tagList.forEach((tag) => {
+    const li = document.createElement('li')
+    li.innerHTML = tag
+    tags.appendChild(li)
+  })
+
+  const title = document.createElement('h1')
+  title.innerHTML = channel.title
+
+  const subtitle = document.createElement('h2')
+  subtitle.innerHTML = channel.metadata.description
+
+  const authors = document.createElement('p')
+  authors.className = 'authors'
+  const author = channel.user.full_name
+  let collaborators = ''
+  if (channel.collaboration) {
+    collaborators =
+      ', ' +
+      channel.collaborators
+        .map((collaborator) => collaborator.full_name)
+        .join(', ')
+  }
+  authors.innerHTML = author + collaborators
+
+  const cover = document.createElement('img')
+  cover.className = 'header__cover'
+  cover.src = img.image.display.url
+
+  const pageInfo = document.getElementById('channel-info')
+  pageInfo.appendChild(tags)
+  pageInfo.appendChild(title)
+  pageInfo.appendChild(subtitle)
+  pageInfo.appendChild(authors)
+  pageInfo.parentNode.insertBefore(cover, pageInfo.nextSibling)
+}
+
+// notes
+
+function noteList(block) {
+  let noteCounter = 1
+  const list = document.getElementById('reference-list')
+  list.innerHTML = block.content_html
+  const notes = list.childNodes[0]
+  notes.className = 'notes'
+
+  for (const item of notes.children) {
+    const number = document.createElement('span')
+    number.className = 'note'
+    number.innerHTML = noteCounter
+    item.prepend(number)
+    noteCounter++
+  }
+}
+
+// BLOCKS
+
 function textBlock(block) {
-  const section = document.createElement('div')
+  const section = document.createElement('section')
   const sectionTitle = document.createElement('h3')
-  const sectionContent = document.createElement('p')
+  const sectionContent = document.createElement('div')
   sectionTitle.innerHTML = block.title
   sectionContent.innerHTML = block.content_html
   section.appendChild(sectionTitle)
@@ -52,25 +139,6 @@ function imageBlock(block) {
   figure.appendChild(figureImg)
   figure.appendChild(figureCaption)
   return figure
-}
-
-function getChannelInfo(channel) {
-  const title = document.createElement('h1')
-  title.innerHTML = channel.title
-  const author = channel.user.full_name
-  let collaborators = ''
-  if (channel.collaboration) {
-    collaborators =
-      ', ' +
-      channel.collaborators
-        .map((collaborator) => collaborator.full_name)
-        .join(', ')
-  }
-  const subtitle = document.createElement('h2')
-  subtitle.innerHTML = author + collaborators
-  const pageInfo = document.getElementById('channel-info')
-  pageInfo.appendChild(title)
-  pageInfo.appendChild(subtitle)
 }
 
 // ---
