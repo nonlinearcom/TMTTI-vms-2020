@@ -89,7 +89,7 @@ function setHeader(channel, tagList, img) {
 
   const cover = document.createElement('img')
   cover.className = 'header__cover'
-  cover.src = img.image.display.url
+  cover.src = img.image.original.url
 
   const pageInfo = document.getElementById('channel-info')
   pageInfo.appendChild(tags)
@@ -134,7 +134,7 @@ function imageBlock(block) {
   const figure = document.createElement('figure')
   const figureImg = document.createElement('img')
   const figureCaption = document.createElement('figcaption')
-  figureImg.src = block.image.display.url
+  figureImg.src = block.image.original.url
   figureCaption.innerHTML = block.title
   figure.appendChild(figureImg)
   figure.appendChild(figureCaption)
