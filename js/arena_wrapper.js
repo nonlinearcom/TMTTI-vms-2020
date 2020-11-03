@@ -13,7 +13,7 @@ async function init() {
 
 async function fetchChannel(slug) {
   const channel = await fetch(
-    `https://api.are.na/v2/channels/${slug}?v=${Math.random()}`
+    `https://api.are.na/v2/channels/${slug}?per=50&v=${Math.random()}`
   )
   return await channel.json()
 }
@@ -32,12 +32,18 @@ function arenaCMS(channel) {
         tagList = block.content.trim().split(', ')
       } else if (block.title === 'notes') {
         noteList(block)
-      } else container.appendChild(textBlock(block))
+      } else if (block.title === 'quote'){
+		container.appendChild(quoteBlock(block))
+	  }
+	  else container.appendChild(textBlock(block))
     }
     if (block.class === 'Image') {
       if (block.title === 'cover') cover = block
       else container.appendChild(imageBlock(block))
-    }
+	}
+	if (block.class === 'Media' && block.source.provider.name === 'YouTube') {
+		container.appendChild(videoBlock(block))
+	  }
     if (block.class === 'Channel') {
       container.appendChild(embedChannel(block.slug))
     }
@@ -130,6 +136,18 @@ function textBlock(block) {
   return section
 }
 
+function quoteBlock(block){
+  const quote = document.createElement('div')
+  quote.className = 'quote'
+  const quoteContent = document.createElement('h2')
+  const quoteAuthor = document.createElement('p')
+  quoteAuthor.innerHTML = block.description
+  quoteContent.innerHTML = block.content_html
+  quote.appendChild(quoteContent)
+  quote.appendChild(quoteAuthor)
+  return quote
+}
+
 function imageBlock(block) {
   const figure = document.createElement('figure')
   const figureImg = document.createElement('img')
@@ -139,6 +157,17 @@ function imageBlock(block) {
   figure.appendChild(figureImg)
   figure.appendChild(figureCaption)
   return figure
+}
+
+function videoBlock(block){
+
+	const video = document.createElement('section')
+	video.className = 'embed-content'
+	video.innerHTML = block.embed.html
+	const frame = video.firstChild
+	frame.width = '100%'
+	frame.height = '360'
+	return video
 }
 
 // ---

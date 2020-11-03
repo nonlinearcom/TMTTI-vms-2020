@@ -1,48 +1,148 @@
+html,
+body{
+	font-size: 16px;
+	font-weight: 300;
+}
+
+/* Main */
+
 main {
-	display: flex;
-	overflow-y: hidden;
-	height: 100vh;
+    display: flex;
+    overflow-y: hidden;
+    height: 100vh;
 }
 
 main > * {
-	flex: 1;
-	overflow-y: scroll;
-	padding: 16px;
+    flex: 1;
+    overflow-y: scroll;
+    padding: 16px;
+}
+
+#channel-images {
+	overflow-x: hidden;
 }
 
 #channel-images figure {
-	width: 100%;
 	transform: none;
 }
 
+#channel-images figure img {
+    height: 500px;
+    width: auto;
+}
+
+
+
+/* Header */
+
+header,
+.about {
+	height: 450px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 16px;
+    color: #222;
+    background-color: white;
+}
+
+.flex--bottom {
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+.intro__header {
+    margin-bottom: 21px;
+}
+
+.intro h1 {
+    font-size: 49px;
+    font-size: clamp(42px, 5vw, 72px);
+    line-height: 1;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 8px 0;
+}
+
+.intro p {
+	font-size: 16px;
+	font-weight: 300;
+}
+
+#toggle-panel {
+	flex-shrink: 0;
+    position: relative;
+    margin: 0;
+    width: 50px;
+    height: 25px;
+    cursor: pointer;
+    background: white;
+    border: 1px solid currentColor;
+    border-radius: 12px;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+input:focus,
+button:focus {
+    outline: none;
+}
+
+#toggle-panel svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#toggle-panel:hover {
+    background-color: #ddd;
+}
+
+#toggle-panel[aria-expanded="true"] {
+    color: #eee;
+    background-color: #222;
+    border: none;
+}
+
+
+/* Cards */
 
 .article-card {
-	min-height: 300px;
-	/* background-color: #eee; */
-	padding: 16px;
-	border: 1px solid black;
-	border-radius: 8px;
-	display: flex;
+    min-height: 300px;
+    padding: 16px;
+    border: 1px solid black;
+    border-top: none;
+    display: flex;
 	flex-direction: column;
 }
 
-#channel-contents > * + * {
-margin-top: 32px;
-}
-
-#channel-contents:last-child {
-	margin-bottom: 32px;
-}
-
-.card--title{
-	margin: 8px 0;
-}
-
-.card--description{
+.article-card ul {
 	margin: 0;
-	font-size: 16px;
 }
 
-.card--author{
+
+
+#channel-contents > *:last-child {
+    margin-bottom: 32px;
+}
+
+.card--title {
+	font-size: 32px;
+	font-weight: 500;
+	margin: 8px 0;
+	max-width: 45ch;
+}
+
+.card--description {
+    margin: 0;
+	font-size: 16px;
+	font-weight: 300;
+	max-width: 45ch;
+}
+
+.card--author {
 	margin-top: auto;
+	margin-bottom: 0;
 }

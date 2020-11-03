@@ -259,6 +259,22 @@ width: 100%;
 height: 100%;
 }
 
+
+/* Quotes */
+
+.quote {
+	border-left: 1px solid #ccc;
+	padding: 0 1em;
+}
+
+.quote h2 {
+	font-style: italic;
+	font-weight: 300;
+	margin
+
+}
+
+
 /* Footer e annotazioni */
 
 footer {
@@ -335,7 +351,7 @@ footer ul  {
 	h1 br{
 		display: none;
   }
-  
+
   h1 {
     font-size: 28px;
     font-size: clamp(28px, 3vw, 74px);
@@ -344,10 +360,10 @@ footer ul  {
   .intro {
     font-size: 24px;
     font-size: clamp(24px, 3vw, 36px);
-  
+
     line-height: 1.3;
     font-weight: 500;
-    
+
   }
 
   .note {

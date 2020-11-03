@@ -1,3 +1,13 @@
+let channels = [
+	'what-we-talk-about-when-we-talk-about-deepfake-5xpvwtjxgmk',
+	'ultra-touch-in-the-disembodied-era',
+	'this-meme-is-not-funny',
+	'arbeiter-illustrierte-zeitung-1924-1933',
+	'pandemic-cinema',
+	'marcia-di-esculapio',
+	'blogging-memory-sharing-healing'
+]
+
 document.addEventListener('load', init())
 
 async function init() {
@@ -45,7 +55,7 @@ function getArticlesList(channel) {
 function getChannelList(group) {
   const articlesContainer = document.getElementById('channel-contents')
   group.channels.forEach((block) => {
-    if (block.class === 'Channel') {
+    if (block.class === 'Channel' && channels.includes(block.slug)) {
       articlesContainer.appendChild(channelBlock(block))
     }
   })
@@ -68,7 +78,7 @@ function imageBlock(block) {
   const figure = document.createElement('figure')
   const figureImg = document.createElement('img')
   const figureCaption = document.createElement('figcaption')
-  figureImg.src = block.image.display.url
+  figureImg.src = block.image.original.url
   figureCaption.innerHTML = block.title
   figure.appendChild(figureImg)
   figure.appendChild(figureCaption)
@@ -78,9 +88,9 @@ function imageBlock(block) {
 function channelBlock(block) {
   const card = document.createElement('div')
   card.className = 'article-card'
-  const cardTitle = document.createElement('h3')
+  const cardTitle = document.createElement('h2')
   cardTitle.className = 'card--title'
-  const cardDescription = document.createElement('p')
+  const cardDescription = document.createElement('h3')
   cardDescription.className = 'card--description'
   const cardAuthor = document.createElement('p')
   cardAuthor.className = 'card--author'
