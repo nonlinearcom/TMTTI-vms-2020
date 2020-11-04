@@ -15,30 +15,29 @@ main {
 main > * {
     flex: 1;
     overflow-y: scroll;
-    padding: 16px;
+	padding: 16px;
+	padding-left: 0;
 }
 
 #channel-images {
 	overflow-x: hidden;
 	padding: 0;
+	z-index: 0;
 }
 
 #channel-images figure {
 	transform: none;
 	position: absolute;
 	top: 50%;
-	max-width: 50%;
-
-	/* left: 25%; */
-
-	transform: translate(25%, -50%);
+	max-width: 75%;
 	opacity: 0;
+	left: 25%;
 	transition: opacity 0.5s ease;
 }
 
 #channel-images figure img {
 	height: 500px;
-	width: auto;
+	object-fit: contain;
 	max-width: 100%;
 }
 
@@ -46,12 +45,18 @@ main > * {
 	opacity: 1!important;
 }
 
+#channel-contents{
+	position: relative;
+	z-index: 10;
+	background: white;
+	padding: 0;
+}
 
 /* Header */
 
 header,
 .about {
-	height: 450px;
+	height: 90vh;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -139,7 +144,7 @@ button:focus {
 
 
 #channel-contents > *:last-child {
-    margin-bottom: 32px;
+    margin-bottom: 1px;
 }
 
 .card--title {

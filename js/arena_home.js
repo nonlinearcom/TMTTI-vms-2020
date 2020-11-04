@@ -1,5 +1,6 @@
 document.addEventListener("load", init());
 
+let coverImages = [];
 let channels = [
     "what-we-talk-about-when-we-talk-about-deepfake-5xpvwtjxgmk",
     "ultra-touch-in-the-disembodied-era",
@@ -10,16 +11,15 @@ let channels = [
     "blogging-memory-sharing-healing",
 ];
 
+
+// observer
+
 let observer;
 let elementsInView = [];
-
 const marginInput = 0;
 const thresholdInput = 1;
-
 const wrapper = document.querySelector("[data-wrapper]");
-
 let boxes;
-let coverImages = [];
 
 const getOptions = () => {
     return {
@@ -99,7 +99,7 @@ function getImageList(blocks) {
     blocks.forEach((block, index) => {
         let image = imageBlock(block);
 		image.setAttribute("data-images", index);
-		image.style.transform = `translate(0,${(Math.random()*200)-400}px)`
+		image.style.transform = `translate(-50%, ${(Math.random()*200)-400}px)`
         imageContainer.appendChild(image);
     });
 }
