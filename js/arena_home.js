@@ -33,14 +33,14 @@ const getOptions = () => {
 const setInViewStyles = (target) => {
 	// target.classList.add('is-inview')
     document
-        .querySelector(`[data-images="${target.getAttribute("data-box")}"]`)
+        .querySelector(`[data-image="${target.getAttribute("data-box")}"]`)
         .classList.add("is-inview");
 };
 
 const setOutOfViewStyles = (target) => {
     // target.classList.remove('is-inview')
     document
-        .querySelector(`[data-images="${target.getAttribute("data-box")}"]`)
+        .querySelector(`[data-image="${target.getAttribute("data-box")}"]`)
         .classList.remove("is-inview");
 };
 
@@ -100,11 +100,18 @@ function getImageList(blocks) {
     const imageContainer = document.getElementById("channel-images");
     blocks.forEach((block, index) => {
         let image = imageBlock(block);
-		image.setAttribute("data-images", index);
-		image.style.transform = `translate(-50%, ${(Math.random()*200)-400}px)`
-        imageContainer.appendChild(image);
+		image.setAttribute("data-image", index);
+		image.style.transform = `scale( ${getRandomIntInclusive('50','100') / 100 } )`
+		image.style.transform = `translate( ${getRandomIntInclusive('-25','25')}%, ${getRandomIntInclusive('-50','50')}%)`
+		imageContainer.appendChild(image);
     });
 }
+
+function getRandomIntInclusive(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min; //Il max è incluso e il min è incluso
+  }
 
 function getArticlesList(channel) {
     const articlesContainer = document.getElementById("channel-contents");

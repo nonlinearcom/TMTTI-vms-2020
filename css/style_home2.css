@@ -1,0 +1,275 @@
+html,
+body{
+	font-size: 16px;
+	font-weight: 300;
+}
+
+/* Main */
+
+main {
+    display: flex;
+    overflow-y: hidden;
+    height: 100vh;
+
+
+	/* column, column-reverse, row, row-reverse ! */
+	flex-direction: row;
+}
+
+main > section{
+	flex: 1 0 50%;
+}
+
+#channel-images {
+	position: relative;
+	background: #222;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+}
+#channel-images h1{
+
+	font-size: 8vmin;
+	text-align: center;
+	color:white;
+	line-height: 1;
+	padding: 0 50px;
+	z-index:100;
+}
+#channel-images::after{
+	content:'';
+	position: absolute;
+	z-index:90;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right:0;
+	background-color: rgba(0,0,0,0.2);
+}
+
+#channel-images figure {
+	transform: none;
+	position: absolute;
+
+	/* not good */
+
+	/* top: 50%;
+	left: 25%;
+	padding: 0 64px; */
+
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}
+
+#channel-images figure img {
+	height: 600px;
+	object-fit: contain;
+	max-width: 100%;
+}
+
+.is-inview {
+	opacity: 1!important;
+}
+
+#channel-contents{
+	position: relative;
+	z-index: 10;
+	background: white;
+	padding: 0;
+	 overflow-y: scroll;
+}
+
+/* Header */
+
+header {
+	height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+	align-items: center;
+	justify-content: center;
+    padding: 16px;
+    color: #222;
+}
+
+header .issue-title{
+	font-size: 8vmin;
+	text-align: center;
+	font-weight: 500;
+	line-height: 1;
+	padding: 0 50px;
+	z-index:100;
+	margin: 0;
+	margin: 0;
+}
+header .issue-number{
+	position: absolute;
+	top:16px;
+	font-size: 21px;
+	text-transform:uppercase;
+	font-weight: 300;
+	margin: 0;
+
+
+}
+.flex--bottom {
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+
+#toggle-panel {
+    position: absolute;
+    top: 16px;
+	right: 16px;
+    width: 50px;
+    height: 25px;
+    cursor: pointer;
+    background: white;
+    border: 1px solid currentColor;
+    border-radius: 12px;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+input:focus,
+button:focus {
+    outline: none;
+}
+
+#toggle-panel svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#toggle-panel:hover {
+    background-color: #ddd;
+}
+
+#toggle-panel[aria-expanded="true"] {
+    color: #eee;
+    background-color: #222;
+    border: none;
+}
+
+
+/* About */
+
+.about {
+	height: 90vh;
+	color: black;
+	background-color: white;
+	padding: 16px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	opacity: 1;
+
+	transform: translateX(100%);
+	/* transition: opacity 1s ease; */
+	transition: transform 1s ease;
+}
+
+.active {
+	/* opacity: 1; */
+	transform: translateX(0);
+}
+
+.about > * {
+		max-width: 70ch;
+}
+
+dl {
+
+	display: flex;
+	flex-wrap: wrap;
+	font-weight: 300;
+	margin: 0;
+	margin-top: 32px;
+  }
+
+  dt {
+	flex-basis: 25%;
+
+  }
+  dd {
+	margin-left: auto;
+	flex-basis: 75%;
+  }
+
+  .students li {
+	  width: auto;
+	  display: inline;
+	}
+
+	.students > li:after {
+		content: ', ';
+		white-space: pre;
+	}
+
+	.students > li:last-of-type:after {
+	content: '';
+	white-space: pre;
+  }
+
+/* Cards */
+
+.article-card {
+    min-height: 40vh;
+    padding: 16px;
+    border: 1px solid black;
+    border-top: none;
+    display: flex;
+	flex-direction: column;
+}
+
+.article-card ul {
+	margin: 0;
+}
+
+#channel-contents > *:last-child {
+    margin-bottom: 40vh;
+}
+
+.card--title {
+	flex: 1;
+	font-weight: 500;
+	margin: 8px 0;
+	max-width: 45ch;
+}
+
+h2.card--title  {
+	font-size: 36px;
+    font-size: clamp(32px, 4vw, 49px);
+    line-height: 1;
+    font-weight: 500;
+}
+
+.card--info{
+	display: flex;
+	align-items: flex-end;
+}
+
+.card--info > * {
+	flex-basis: 50%;
+	flex-grow: 0.5;
+	margin: 0;
+}
+
+.card--description {
+	justify-self: flex-end;
+
+	flex-shrink: 1;
+	margin: 0;
+	font-size: 16px;
+	font-weight: 300;
+	max-width: 45ch;
+}
+
+.card--author {
+	flex-shrink: 0;
+	margin-bottom: 0;
+}
