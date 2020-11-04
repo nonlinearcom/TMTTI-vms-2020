@@ -24,13 +24,23 @@ main > * {
 
 #channel-images figure {
 	transform: none;
+	position: absolute;
+	top: 50%;
+	left: 25%;
+	transform: translate(-50%, -50%);
+	opacity: 0;
+	transition: opacity 0.5s ease;
+	pointer-events: none;
 }
 
 #channel-images figure img {
-    height: 500px;
+    height: 400px;
     width: auto;
 }
 
+.is-inview {
+	opacity: 1!important;
+}
 
 
 /* Header */

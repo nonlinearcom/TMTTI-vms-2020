@@ -1,18 +1,75 @@
-let channels = [
-	'what-we-talk-about-when-we-talk-about-deepfake-5xpvwtjxgmk',
-	'ultra-touch-in-the-disembodied-era',
-	'this-meme-is-not-funny',
-	'arbeiter-illustrierte-zeitung-1924-1933',
-	'pandemic-cinema',
-	'marcia-di-esculapio',
-	'blogging-memory-sharing-healing'
-]
+document.addEventListener("load", init());
 
-document.addEventListener('load', init())
+let channels = [
+    "what-we-talk-about-when-we-talk-about-deepfake-5xpvwtjxgmk",
+    "ultra-touch-in-the-disembodied-era",
+    "this-meme-is-not-funny",
+    "arbeiter-illustrierte-zeitung-1924-1933",
+    "pandemic-cinema",
+    "marcia-di-esculapio",
+    "blogging-memory-sharing-healing",
+];
+
+let observer;
+let elementsInView = [];
+
+const marginInput = 0;
+const thresholdInput = 1;
+
+const wrapper = document.querySelector("[data-wrapper]");
+
+let boxes;
+let coverImages = [];
+
+const getOptions = () => {
+    return {
+        root: wrapper,
+        rootMargin: `${marginInput}px`,
+        threshold: thresholdInput,
+    };
+};
+
+const setInViewStyles = (target) => {
+    // target.classList.add('is-inview')
+    document
+        .querySelector(`[data-images="${target.getAttribute("data-box")}"]`)
+        .classList.add("is-inview");
+};
+
+const setOutOfViewStyles = (target) => {
+    // target.classList.remove('is-inview')
+    document
+        .querySelector(`[data-images="${target.getAttribute("data-box")}"]`)
+        .classList.remove("is-inview");
+};
+
+const onIntersect = (entries) => {
+    entries.forEach((entry) => {
+        const { target, isIntersecting, intersectionRatio } = entry;
+        // console.log(entry)
+
+        if (intersectionRatio >= thresholdInput && isIntersecting) {
+            return setInViewStyles(target);
+        }
+        return setOutOfViewStyles(target);
+    });
+};
+
+
+
+
 
 async function init() {
-  await fetchChannel('demo-img').then((data) => getChannelImages(data))
-  await fetchGroup('iulm-vms-2020').then((data) => getChannelList(data))
+    await fetchGroup("iulm-vms-2020").then((data) => {
+        getChannelList(data);
+        getImageList(coverImages);
+
+        boxes = [...document.querySelectorAll("[data-box]")];
+        observer = new IntersectionObserver(onIntersect, getOptions());
+        boxes.forEach((el) => {
+            observer.observe(el);
+        });
+    });
 }
 
 // FETCH
@@ -20,153 +77,128 @@ async function init() {
 // channel
 
 async function fetchChannel(slug) {
-  const channel = await fetch(
-    `https://api.are.na/v2/channels/${slug}?v=${Math.random()}`
-  )
-  return await channel.json()
+    const channel = await fetch(
+        `https://api.are.na/v2/channels/${slug}?v=${Math.random()}`
+    );
+    return await channel.json();
 }
 
 // group
 
 async function fetchGroup(slug) {
-  const channel = await fetch(`https://api.are.na/v2/groups/${slug}/channels`)
-  return await channel.json()
+    const channel = await fetch(
+        `https://api.are.na/v2/groups/${slug}/channels`
+    );
+    return await channel.json();
 }
 
 // BUILD SECTIONS
 
-function getChannelImages(channel) {
-  const imageContainer = document.getElementById('channel-images')
-  const blocks = channel.contents.filter((block) => block.image)
-  blocks.forEach((block) => {
-    imageContainer.appendChild(imageBlock(block))
-  })
+function getImageList(blocks) {
+    const imageContainer = document.getElementById("channel-images");
+    blocks.forEach((block, index) => {
+        let image = imageBlock(block);
+		image.setAttribute("data-images", index);
+		image.style.transform = `translate(${(Math.random()*200)-400}px,${(Math.random()*200)-400}px)`
+        imageContainer.appendChild(image);
+    });
 }
 
 function getArticlesList(channel) {
-  const articlesContainer = document.getElementById('channel-contents')
-  channel.contents.forEach((block) => {
-    if (block.class === 'Channel') {
-      articlesContainer.appendChild(channelBlock(block))
-    }
-  })
+    const articlesContainer = document.getElementById("channel-contents");
+    channel.contents.forEach((block) => {
+        if (block.class === "Channel") {
+            articlesContainer.appendChild(channelBlock(block));
+        }
+    });
 }
 
 function getChannelList(group) {
-  const articlesContainer = document.getElementById('channel-contents')
-  group.channels.forEach((block) => {
-    if (block.class === 'Channel' && channels.includes(block.slug)) {
-      articlesContainer.appendChild(channelBlock(block))
-    }
-  })
+    let channelCount = 0;
+    const articlesContainer = document.getElementById("channel-contents");
+    group.channels.forEach((block) => {
+        if (block.class === "Channel" && channels.includes(block.slug)) {
+            articlesContainer.appendChild(channelBlock(block, channelCount));
+            channelCount++;
+        }
+    });
 }
 
 // BLOCKS
 
 function textBlock(block) {
-  const section = document.createElement('div')
-  const sectionTitle = document.createElement('h3')
-  const sectionContent = document.createElement('p')
-  sectionTitle.innerHTML = block.title
-  sectionContent.innerHTML = block.content_html
-  section.appendChild(sectionTitle)
-  section.appendChild(sectionContent)
-  return section
+    const section = document.createElement("div");
+    const sectionTitle = document.createElement("h3");
+    const sectionContent = document.createElement("p");
+    sectionTitle.innerHTML = block.title;
+    sectionContent.innerHTML = block.content_html;
+    section.appendChild(sectionTitle);
+    section.appendChild(sectionContent);
+    return section;
 }
 
 function imageBlock(block) {
-  const figure = document.createElement('figure')
-  const figureImg = document.createElement('img')
-  const figureCaption = document.createElement('figcaption')
-  figureImg.src = block.image.original.url
-  figureCaption.innerHTML = block.title
-  figure.appendChild(figureImg)
-  figure.appendChild(figureCaption)
-  return figure
+    const figure = document.createElement("figure");
+    const figureImg = document.createElement("img");
+    figureImg.src = block.image.original.url;
+    figure.appendChild(figureImg);
+    //   const figureCaption = document.createElement('figcaption')
+    //   figureCaption.innerHTML = block.title
+    //   figure.appendChild(figureCaption)
+    return figure;
 }
 
-function channelBlock(block) {
+function channelBlock(block, index) {
+    let cover = block.contents.find((content) => content.title === "cover");
+    coverImages.push(cover);
 
+    const tags = document.createElement("ul");
+    tags.className = "tags";
+    let tagList = block.contents
+        .find((content) => content.title === "tag")
+        .content.trim()
+        .split(", ");
+    if (tagList.length) {
+        tagList.forEach((tag) => {
+            const li = document.createElement("li");
+            li.innerHTML = tag;
+            tags.appendChild(li);
+        });
+    }
 
-	const tags = document.createElement('ul')
-	tags.className = 'tags'
-	let tagList = block.contents.filter(content => content.title === 'tag').map(c => c.content.trim().split(', ')).flat()
-	console.log(tagList)
+    const card = document.createElement("div");
+    card.className = "article-card";
+    card.setAttribute("data-box", index);
+    const cardTitle = document.createElement("h2");
+    cardTitle.className = "card--title";
+    const cardDescription = document.createElement("h3");
+    cardDescription.className = "card--description";
+    const cardAuthor = document.createElement("p");
+    cardAuthor.className = "card--author";
 
-	if(tagList.length){
-		tagList.forEach((tag) => {
-		const li = document.createElement('li')
-		li.innerHTML = tag
-		tags.appendChild(li)
-	})
-	}
+    cardTitle.innerHTML = block.title;
+    cardDescription.innerHTML = block.metadata.description;
 
+    const author = block.user.full_name;
+    let collaborators = "";
+    if (block.collaboration) {
+        collaborators =
+            ", " +
+            block.collaborators
+                .map((collaborator) => collaborator.full_name)
+                .join(", ");
+    }
 
-  const card = document.createElement('div')
-  card.className = 'article-card'
-  const cardTitle = document.createElement('h2')
-  cardTitle.className = 'card--title'
-  const cardDescription = document.createElement('h3')
-  cardDescription.className = 'card--description'
-  const cardAuthor = document.createElement('p')
-  cardAuthor.className = 'card--author'
+    cardAuthor.innerHTML = author + collaborators;
 
-  cardTitle.innerHTML = block.title
-  cardDescription.innerHTML = block.metadata.description
+    cardInfo = document.createElement("div");
+    cardInfo.className = "card--info";
+    cardInfo.appendChild(cardAuthor);
+    cardInfo.appendChild(cardDescription);
 
-  const author = block.user.full_name
-  let collaborators = ''
-  if (block.collaboration) {
-    collaborators =
-      ', ' +
-      block.collaborators
-        .map((collaborator) => collaborator.full_name)
-        .join(', ')
-  }
-
-  cardAuthor.innerHTML = author + collaborators
-
-  cardInfo = document.createElement('div')
-  cardInfo.className = 'card--info'
- cardInfo.appendChild(cardAuthor)
- cardInfo.appendChild(cardDescription)
-
-  if (tagList.length) card.appendChild(tags)
-  card.appendChild(cardTitle)
-  card.appendChild(cardInfo)
-  return card
+    if (tagList.length) card.appendChild(tags);
+    card.appendChild(cardTitle);
+    card.appendChild(cardInfo);
+    return card;
 }
 
-// function xhttpFetch(slug) {
-//   const xhttp = new XMLHttpRequest()
-//   xhttp.onreadystatechange = function() {
-//     if (this.readyState === 4 && this.status === 200) {
-//       const fullChannel = JSON.parse(this.responseText)
-//       console.log(fullChannel)
-//       getChannelContents(fullChannel)
-//       getChannelImages(fullChannel)
-//     }
-//   }
-//   xhttp.open(
-//     'GET',
-//     `https://api.are.na/v2/channels/${slug}?v=${Math.random()}`,
-//     true
-//   ) // random is to avoid cache and fetch new blocks
-//   xhttp.send()
-// }
-
-// function arenaCMS(channel) {
-//   const container = document.getElementById('container')
-//   channel.contents.reverse().forEach((block) => {
-//     if (block.class === 'Text') container.appendChild(textBlock(block))
-//     if (block.image) container.appendChild(imageBlock(block))
-//   })
-// }
-
-// function getChannelContents(channel) {
-// 	const textContainer = document.getElementById('channel-contents')
-// 	const blocks = channel.contents.filter((block) => block.class === 'Text')
-// 	blocks.forEach((block) => {
-// 	  textContainer.appendChild(textBlock(block))
-// 	})
-//   }
