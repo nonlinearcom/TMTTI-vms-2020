@@ -110,7 +110,7 @@ button:focus {
 /* Cards */
 
 .article-card {
-    min-height: 300px;
+    min-height: 33vh;
     padding: 16px;
     border: 1px solid black;
     border-top: none;
@@ -129,20 +129,41 @@ button:focus {
 }
 
 .card--title {
-	font-size: 32px;
+	flex: 1;
+	/* font-size: 32px; */
 	font-weight: 500;
 	margin: 8px 0;
 	max-width: 45ch;
 }
 
+h2.card--title  {
+	font-size: 36px;
+    font-size: clamp(32px, 4vw, 49px);
+    line-height: 1;
+    font-weight: 500;
+    /* text-transform: uppercase; */
+}
+
+.card--info{
+	display: flex;
+	align-items: flex-end;
+}
+
 .card--description {
-    margin: 0;
+	justify-self: flex-end;
+	flex-basis: 50%;
+	flex-grow: 0.5;
+	flex-shrink: 1;
+	margin: 0;
 	font-size: 16px;
 	font-weight: 300;
 	max-width: 45ch;
 }
 
 .card--author {
-	margin-top: auto;
+	flex-basis: 50%;
+	flex-grow: 0.5;
+	flex-shrink: 0;
+	/* margin-top: auto; */
 	margin-bottom: 0;
 }

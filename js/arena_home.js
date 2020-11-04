@@ -126,10 +126,14 @@ function channelBlock(block) {
 
   cardAuthor.innerHTML = author + collaborators
 
+  cardInfo = document.createElement('div')
+  cardInfo.className = 'card--info'
+ cardInfo.appendChild(cardAuthor)
+ cardInfo.appendChild(cardDescription)
+
   if (tagList.length) card.appendChild(tags)
   card.appendChild(cardTitle)
-  card.appendChild(cardDescription)
-  card.appendChild(cardAuthor)
+  card.appendChild(cardInfo)
   return card
 }
 
