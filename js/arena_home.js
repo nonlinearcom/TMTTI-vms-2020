@@ -1,13 +1,14 @@
 document.addEventListener("load", init());
 
+
 let coverImages = [];
 let channels = [
-    "what-we-talk-about-when-we-talk-about-deepfake-5xpvwtjxgmk",
-    "ultra-touch-in-the-disembodied-era",
     "this-meme-is-not-funny",
-    "arbeiter-illustrierte-zeitung-1924-1933",
+    "ultra-touch-in-the-disembodied-era",
     "pandemic-cinema",
-    "marcia-di-esculapio",
+    "what-we-talk-about-when-we-talk-about-deepfake-5xpvwtjxgmk",
+    "arbeiter-illustrierte-zeitung-1924-1933",
+    "la-marcia-di-esculapio",
     "blogging-memory-sharing-healing",
 ];
 
@@ -30,7 +31,7 @@ const getOptions = () => {
 };
 
 const setInViewStyles = (target) => {
-    // target.classList.add('is-inview')
+	// target.classList.add('is-inview')
     document
         .querySelector(`[data-images="${target.getAttribute("data-box")}"]`)
         .classList.add("is-inview");
@@ -61,6 +62,7 @@ const onIntersect = (entries) => {
 
 async function init() {
     await fetchGroup("iulm-vms-2020").then((data) => {
+
         getChannelList(data);
         getImageList(coverImages);
 
@@ -76,12 +78,12 @@ async function init() {
 
 // channel
 
-async function fetchChannel(slug) {
-    const channel = await fetch(
-        `https://api.are.na/v2/channels/${slug}?v=${Math.random()}`
-    );
-    return await channel.json();
-}
+// async function fetchChannel(slug) {
+//     const channel = await fetch(
+//         `https://api.are.na/v2/channels/${slug}?v=${Math.random()}`
+//     );
+//     return await channel.json();
+// }
 
 // group
 
@@ -115,13 +117,14 @@ function getArticlesList(channel) {
 
 function getChannelList(group) {
     let channelCount = 0;
-    const articlesContainer = document.getElementById("channel-contents");
-    group.channels.forEach((block) => {
-        if (block.class === "Channel" && channels.includes(block.slug)) {
-            articlesContainer.appendChild(channelBlock(block, channelCount));
-            channelCount++;
-        }
-    });
+
+	const articlesContainer = document.getElementById("channel-contents");
+
+	channels.forEach(slug => {
+		let block = group.channels.find(channel => channel.slug === slug)
+		articlesContainer.appendChild(channelBlock(block, channelCount));
+		channelCount++;
+	})
 }
 
 // BLOCKS
