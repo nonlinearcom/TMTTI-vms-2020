@@ -86,6 +86,22 @@ function imageBlock(block) {
 }
 
 function channelBlock(block) {
+
+
+	const tags = document.createElement('ul')
+	tags.className = 'tags'
+	let tagList = block.contents.filter(content => content.title === 'tag').map(c => c.content.trim().split(', ')).flat()
+	console.log(tagList)
+
+	if(tagList.length){
+		tagList.forEach((tag) => {
+		const li = document.createElement('li')
+		li.innerHTML = tag
+		tags.appendChild(li)
+	})
+	}
+
+
   const card = document.createElement('div')
   card.className = 'article-card'
   const cardTitle = document.createElement('h2')
@@ -110,6 +126,7 @@ function channelBlock(block) {
 
   cardAuthor.innerHTML = author + collaborators
 
+  if (tagList.length) card.appendChild(tags)
   card.appendChild(cardTitle)
   card.appendChild(cardDescription)
   card.appendChild(cardAuthor)
