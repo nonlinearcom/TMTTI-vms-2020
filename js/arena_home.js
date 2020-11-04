@@ -99,7 +99,7 @@ function getImageList(blocks) {
     blocks.forEach((block, index) => {
         let image = imageBlock(block);
 		image.setAttribute("data-images", index);
-		image.style.transform = `translate(${(Math.random()*200)-400}px,${(Math.random()*200)-400}px)`
+		image.style.transform = `translate(0,${(Math.random()*200)-400}px)`
         imageContainer.appendChild(image);
     });
 }

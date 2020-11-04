@@ -20,22 +20,26 @@ main > * {
 
 #channel-images {
 	overflow-x: hidden;
+	padding: 0;
 }
 
 #channel-images figure {
 	transform: none;
 	position: absolute;
 	top: 50%;
-	left: 25%;
-	transform: translate(-50%, -50%);
+	max-width: 50%;
+
+	/* left: 25%; */
+
+	transform: translate(25%, -50%);
 	opacity: 0;
 	transition: opacity 0.5s ease;
-	pointer-events: none;
 }
 
 #channel-images figure img {
-    height: 400px;
-    width: auto;
+	height: 500px;
+	width: auto;
+	max-width: 100%;
 }
 
 .is-inview {
