@@ -391,9 +391,16 @@ margin-right: 36px;
 article {
 	display: block;
 	overflow: auto;
+
 	}
 
+#article__content > *{
+	margin: 24px;
+}
+
 .image-placeholder {
+max-width: 100% !important;
+width: 100%;
 visibility: visible;
 position: relative;
 height: auto;
@@ -402,16 +409,20 @@ height: auto;
 figure {
 width: 100%;
 transform: translateX(0);
+margin: 0;
 }
 
 figcaption {
+
 	color: black;
 	background: none;
+	padding: 0 24px;
 }
 
 figure img {
+	max-width: 100%;
 	height: auto;
-	max-height: 75vh;
+	/* max-height: 75vh; */
 }
 
 header {
@@ -427,7 +438,6 @@ width: 100%;
 min-height: calc(50vh - 50px);
 
 }
-
 
 
 
