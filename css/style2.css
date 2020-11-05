@@ -87,12 +87,6 @@ nav svg {
 	z-index: 5;
 }
 
-
-
-
-
-
-
 .about--icon{
 	font-size: 15px;
 	text-align: center;
@@ -270,26 +264,38 @@ p {
 	transition: opacity 0.5s ease;
 }
 
-#article__images figure img {
-	height: 600px;
-	object-fit: contain;
-	max-width: 100%;
+#article__images figcaption {
+	background-color: #222;
 }
+
 
 .image-placeholder{
 	margin: 0!important;
 	padding: 0!important;
 	height: 0;
-
-	/* visibility: hidden; */
+	visibility: hidden;
 }
 
+.image-placeholder figure {
+	position: relative;
+	display: block;
+	max-width: 100%;
+}
+
+
+figure img {
+	height: 600px;
+	object-fit: contain;
+	max-width: 100%;
+}
 
 figcaption {
 	font-size: 16px;
 	margin: 16px auto;
-/* color: lightslategrey; */
+	color: white;
 }
+
+
 
 .is-inview {
 	opacity: 1!important;
@@ -300,8 +306,8 @@ figcaption {
 	padding-bottom: 56.25%;
 	height: 0;
 	overflow: hidden;
-	max-width: 100%;
-	margin: 84px 0;
+	max-width: 100%!important;
+	margin: 42px 0;
 }
 
 .embed-content iframe {
@@ -333,7 +339,9 @@ figcaption {
 footer {
 	border-top: 1px solid currentColor;
 	margin-top: 96px;
-	padding: 16px;
+	padding: 48px;
+	margin: 0!important;
+	max-width: 100%!important;
 
 }
 
@@ -379,16 +387,37 @@ margin-right: 36px;
 }
 
 @media (max-width:1024px)  {
+
+article {
+	display: block;
+	overflow: auto;
+	}
+
+.image-placeholder {
+visibility: visible;
+position: relative;
+height: auto;
+}
+
 figure {
 width: 100%;
 transform: translateX(0);
+}
+
+figcaption {
+	color: black;
+	background: none;
+}
+
+figure img {
+	height: auto;
+	max-height: 75vh;
 }
 
 header {
 display: flex;
 flex-flow: row wrap;
 height: auto;
-/* margin: 82px 16px; */
 margin-bottom: 82px;
 
 }

@@ -76,54 +76,59 @@ function arenaCMS(channel) {
     let cover = null;
 	let imageCount = 0;
 	let footer = document.createElement('footer')
-	let embed, notes
+	let embed, notes = null
 
     const articleContainer = document.getElementById("article__content");
     const imageContainer = document.getElementById("article__images");
     channel.contents.reverse().forEach((block) => {
-        if (block.class === "Text") {
-            if (block.title === "tag") {
-                tagList = block.content.trim().split(", ");
-            } else if (block.title === "notes") {
 
-                articleContainer.appendChild(noteList(block));
-            } else if (block.title === "quote") {
-                articleContainer.appendChild(quoteBlock(block));
-            } else articleContainer.appendChild(textBlock(block));
-        }
+		if (block.class === "Text") {
+            if (block.title === "tag") tagList = block.content.trim().split(", ");
+			else if (block.title === "notes") notes = noteList(block);
+			else if (block.title === "quote") articleContainer.appendChild(quoteBlock(block));
+            else articleContainer.appendChild(textBlock(block));
+		}
+
         if (block.class === "Image") {
             let image = imageBlock(block);
             image.setAttribute("data-image", imageCount);
             imageContainer.appendChild(image);
-            if (block.title === "cover") {
-                articleContainer.prepend(imageBlockPlaceholder(imageCount));
-            } else
-                articleContainer.appendChild(imageBlockPlaceholder(imageCount));
+            if (block.title === "cover") articleContainer.prepend(imageBlockPlaceholder(block, imageCount));
+			else articleContainer.appendChild(imageBlockPlaceholder(block, imageCount));
             imageCount++;
             // }
         }
-        if (
+
+		if (
             block.class === "Media" &&
             block.source.provider.name === "YouTube"
         ) {
             articleContainer.appendChild(videoBlock(block));
         }
-        if (block.class === "Channel") {
-            articleContainer.appendChild(embedChannel(block.slug));
+
+		if (block.class === "Channel") {
+            embed = embedChannel(block.slug);
         }
-    });
+	});
+
+	if (embed) footer.appendChild(embed)
+	if(notes) footer.appendChild(notes)
+	articleContainer.appendChild(footer)
     setHeader(channel, tagList, cover);
 }
 
 // embed reference
 
 function embedChannel(slug) {
-    const embed = document.createElement("iframe");
+	const embedContainer = document.createElement('section')
+	embedContainer.className = "embed-content";
+	const embed = document.createElement("iframe");
     embed.src = `https://www.are.na/iulm-vms-2020/${slug}/embed`;
     embed.allowFullscreen = true;
     embed.width = "100%";
-    embed.height = "560";
-    return embed;
+	embed.height = "560";
+	embedContainer.appendChild(embed)
+    return embedContainer;
 }
 
 // header
@@ -174,10 +179,10 @@ function setHeader(channel, tagList, img) {
 function noteList(block) {
     let noteCounter = 1;
     //   const list = document.getElementById('reference-list')
-    let footer = document.createElement("footer");
-    footer.setAttribute("id", "reference-list");
-    footer.innerHTML = block.content_html;
-    const notes = footer.childNodes[0];
+    let list = document.createElement("section");
+    list.setAttribute("id", "reference-list");
+    list.innerHTML = block.content_html;
+    const notes = list.childNodes[0];
     notes.className = "notes";
 
     for (const item of notes.children) {
@@ -187,7 +192,7 @@ function noteList(block) {
         item.prepend(number);
         noteCounter++;
     }
-    return footer;
+    return list;
 }
 
 // BLOCKS
@@ -216,20 +221,27 @@ function quoteBlock(block) {
 }
 
 function imageBlock(block) {
-    const figure = document.createElement("figure");
+	const figure = document.createElement("figure");
+
     const figureImg = document.createElement("img");
     figureImg.src = block.image.original.url;
-    figure.appendChild(figureImg);
-    //   const figureCaption = document.createElement('figcaption')
-    //   figureCaption.innerHTML = block.title
-    //   figure.appendChild(figureCaption)
+	figure.appendChild(figureImg);
+
+	if(block.title !== "cover"){
+	const figureCaption = document.createElement('figcaption')
+	figureCaption.innerHTML = block.title
+	figure.appendChild(figureCaption)
+	}
+
     return figure;
 }
 
-function imageBlockPlaceholder(index) {
+function imageBlockPlaceholder(block, index) {
     const placeholder = document.createElement("div");
 	placeholder.setAttribute("data-box", index);
 	placeholder.className = 'image-placeholder';
+	let image = imageBlock(block)
+	placeholder.appendChild(image)
     return placeholder;
 }
 
