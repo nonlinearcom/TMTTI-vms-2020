@@ -6,7 +6,7 @@ let channels = [
     "this-meme-is-not-funny",
     "ultra-touch-in-the-disembodied-era",
     "pandemic-cinema",
-    "what-we-talk-about-when-we-talk-about-deepfake-5xpvwtjxgmk",
+    "what-we-talk-about-when-we-talk-about-deepfake-ojdrxaa0uci",
     "arbeiter-illustrierte-zeitung-1924-1933",
     "la-marcia-di-esculapio",
     "blogging-memory-sharing-healing",
@@ -186,7 +186,13 @@ function channelBlock(block, index) {
     const cardAuthor = document.createElement("p");
     cardAuthor.className = "card--author";
 
-    cardTitle.innerHTML = block.title;
+
+	titleLink = document.createElement('a');
+	titleLink.href = `/article.html#${block.slug}`
+	titleLink.innerHTML = block.title;
+	cardTitle.appendChild(titleLink)
+
+    // cardTitle.innerHTML = block.title;
     cardDescription.innerHTML = block.metadata.description;
 
     const author = block.user.full_name;
