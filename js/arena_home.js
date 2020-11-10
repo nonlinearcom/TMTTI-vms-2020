@@ -158,11 +158,23 @@ function imageBlock(block) {
     return figure;
 }
 
+// function svgArrow(){
+// 	let arrow = document.createElement('svg')
+// 	var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
+
+// }
+
+
 function channelBlock(block, index) {
     let cover = block.contents.find((content) => content.title === "cover");
     coverImages.push(cover);
 
-    const tags = document.createElement("ul");
+
+	const cardHeader = document.createElement('div')
+	cardHeader.className = 'article-card--header'
+
+	const tags = document.createElement("ul");
     tags.className = "tags";
     let tagList = block.contents
         .find((content) => content.title === "tag")
@@ -173,8 +185,15 @@ function channelBlock(block, index) {
             const li = document.createElement("li");
             li.innerHTML = tag;
             tags.appendChild(li);
-        });
+		});
+		cardHeader.appendChild(tags)
     }
+
+	const arrow = document.createElement('img')
+	arrow.src = '/assets/arrow.svg'
+	arrow.style.transform = 'rotate(-90deg)'
+	arrow.className = 'arrow-link'
+	cardHeader.appendChild(arrow);
 
     const card = document.createElement("div");
     card.className = "article-card";
@@ -188,6 +207,7 @@ function channelBlock(block, index) {
 
 
 	titleLink = document.createElement('a');
+	titleLink.className = "stretched-link"
 	titleLink.href = `/article.html#${block.slug}`
 	titleLink.innerHTML = block.title;
 	cardTitle.appendChild(titleLink)
@@ -212,7 +232,8 @@ function channelBlock(block, index) {
     cardInfo.appendChild(cardAuthor);
     cardInfo.appendChild(cardDescription);
 
-    if (tagList.length) card.appendChild(tags);
+	// if (tagList.length) card.appendChild(tags);
+	card.appendChild(cardHeader);
     card.appendChild(cardTitle);
     card.appendChild(cardInfo);
     return card;
