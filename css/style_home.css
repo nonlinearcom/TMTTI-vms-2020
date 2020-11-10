@@ -92,6 +92,7 @@ header {
 	color: #222;
 	border-bottom: 1px solid black;
 	border-left: 1px solid black;
+	position: relative;
 }
 
 header .issue-title{
@@ -310,3 +311,16 @@ h2.card--title  {
 	content: '';
   }
 
+  @media (max-width:1024px)  {
+
+
+	main {
+		flex-direction: column;
+	}
+
+	.article-card {
+		/* min-height: 50vh; */
+	}
+
+
+  }
