@@ -116,7 +116,7 @@ header {
 header h1 {
 	color: #222;
 	font-size: 42px;
-	font-size: 8vmin;
+	font-size: 6vmin;
 	line-height: 1;
 	font-weight: 500;
 	margin-top: auto;
@@ -230,7 +230,8 @@ article figure {
 article figcaption {
 	width:100%;
 	position: absolute;
-	bottom: 16px;
+	bottom: 0;
+	padding: 32px;
 	text-align: center;
 	font-size: 16px;
 	color: white;
