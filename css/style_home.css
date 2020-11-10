@@ -81,7 +81,18 @@ main > section{
 
 /* Header */
 
+
 header {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px solid black;
+	transition: flex 0.5s ease;
+}
+
+header .intro {
 	height: 100%;
     margin: 0;
     display: flex;
@@ -90,11 +101,10 @@ header {
 	justify-content: center;
     padding: 16px;
 	color: #222;
-	border-bottom: 1px solid black;
 	position: relative;
 }
 
-header .issue-title{
+header .intro .issue-title{
 	font-size: 8vmin;
 	text-align: center;
 	font-weight: 500;
@@ -102,9 +112,8 @@ header .issue-title{
 	padding: 0 50px;
 	z-index:100;
 	margin: 0;
-	margin: 0;
 }
-header .issue-number{
+header .intro .issue-number{
 	position: absolute;
 	top:16px;
 	font-size: 21px;
@@ -115,7 +124,7 @@ header .issue-number{
 
 }
 
-header .scroll-down {
+header .intro .scroll-down {
 	position: absolute;
 	width: 50px;
 	height: 50px;
@@ -167,38 +176,54 @@ button:focus {
 /* About */
 
 .about {
+	font-size: 16px;
+	font-weight: 300;
 	opacity: 0;
 	transition: opacity 1s ease;
-	display: none;
-	/* transform: translateX(100%); */
-	/* transition: transform 1s ease; */
+	position: relative;
+	border-top: 1px solid black;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	/* transform: translateY(-100%); */
+	background: white;
+	/* padding: 16px 0; */
+	width: 100%;
+	display: flex;
+	/* flex-direction: column; */
+	align-items: flex-end;
+	flex-wrap: wrap;
 }
 
-.active {
-	display: show;
-	opacity: 1;
+.about p {
+	margin: 0;
+	/* align-self: flex-start; */
 }
 
 .about > * {
-		max-width: 70ch;
+	flex: 1;
 }
+
+.active {
+	padding: 32px 16px;
+	/* min-height: 33vh; */
+	height: auto;
+	opacity: 1;
+}
+
 
 dl {
 
-	display: flex;
-	flex-wrap: wrap;
 	font-weight: 300;
 	margin: 0;
-	margin-top: 32px;
   }
 
   dt {
-	flex-basis: 25%;
+	margin-top: 0.5em;
 
   }
   dd {
 	margin-left: auto;
-	flex-basis: 75%;
   }
 
   	.students li {
