@@ -91,7 +91,6 @@ header {
     padding: 16px;
 	color: #222;
 	border-bottom: 1px solid black;
-	border-left: 1px solid black;
 	position: relative;
 }
 
@@ -223,9 +222,7 @@ dl {
 	position: relative;
     min-height: 40vh;
     padding: 16px;
-    border: 1px solid black;
-	border-top: none;
-	border-right: none;
+    border-bottom: 1px solid black;
     display: flex;
 	flex-direction: column;
 }
