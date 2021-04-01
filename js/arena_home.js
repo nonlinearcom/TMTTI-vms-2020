@@ -70,8 +70,15 @@ const onIntersect = (entries) => {
 
 
 async function init() {
-    await fetchGroup("iulm-vms-2020").then((data) => {
-
+	await fetchChannelList([
+		"this-meme-is-not-funny",
+		"ultra-touch-in-the-disembodied-era",
+		"pandemic-cinema",
+		"what-we-talk-about-when-we-talk-about-deepfake-ojdrxaa0uci",
+		"arbeiter-illustrierte-zeitung-1924-1933",
+		"la-marcia-di-esculapio",
+		"blogging-memory-sharing-healing",
+	]).then((data) => {
         getChannelList(data);
         getImageList(coverImages);
 
@@ -87,12 +94,20 @@ async function init() {
 
 // channel
 
-// async function fetchChannel(slug) {
-//     const channel = await fetch(
-//         `https://api.are.na/v2/channels/${slug}?v=${Math.random()}`
-//     );
-//     return await channel.json();
-// }
+async function fetchChannel(slug) {
+    const channel = await fetch(
+        `https://api.are.na/v2/channels/${slug}?per=50v=${Math.random()}`
+    );
+    return await channel.json();
+}
+
+
+async function fetchChannelList(channels){
+return Promise.all(channels.map( channel => fetchChannel(channel)))
+	.catch(error => console.log(`Error in promises ${error}`))
+}
+
+
 
 // group
 
@@ -131,14 +146,13 @@ function getArticlesList(channel) {
     });
 }
 
-function getChannelList(group) {
+function getChannelList(data) {
     let channelCount = 0;
 
 	const articlesContainer = document.getElementById("channel-contents");
 
-	channels.forEach(slug => {
-		let block = group.channels.find(channel => channel.slug === slug)
-		articlesContainer.appendChild(channelBlock(block, channelCount));
+	data.forEach(channel => {
+		articlesContainer.appendChild(channelBlock(channel, channelCount));
 		channelCount++;
 	})
 }
